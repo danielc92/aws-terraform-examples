@@ -1,7 +1,9 @@
+import { v4 as uuidv4 } from "uuid";
+
 export const customerItemParams: AWS.DynamoDB.PutItemInput = {
   Item: {
     CUSTOMER_ID: {
-      N: "1",
+      S: uuidv4(),
     },
     CUSTOMER_NAME: {
       S: "Daniel corcoran",
@@ -17,11 +19,10 @@ export const customerBatchItemsParams: AWS.DynamoDB.BatchWriteItemInput = {
         PutRequest: {
           Item: {
             CUSTOMER_ID: {
-              N: "1",
+              S: uuidv4(),
             },
             CREATED_AT: {
-              // N: new Date().getTime().toString(),
-              N: "25",
+              N: new Date().getTime().toString(),
             },
             CUSTOMER_NAME: {
               S: "Robert California",
@@ -36,11 +37,10 @@ export const customerBatchItemsParams: AWS.DynamoDB.BatchWriteItemInput = {
         PutRequest: {
           Item: {
             CUSTOMER_ID: {
-              N: "1",
+              S: uuidv4(),
             },
             CREATED_AT: {
-              // N: new Date().getTime().toString(),
-              N: "30",
+              N: new Date().getTime().toString(),
             },
             CUSTOMER_NAME: {
               S: "Dwight Schrute",
@@ -55,11 +55,10 @@ export const customerBatchItemsParams: AWS.DynamoDB.BatchWriteItemInput = {
         PutRequest: {
           Item: {
             CUSTOMER_ID: {
-              N: "1",
+              S: uuidv4(),
             },
             CREATED_AT: {
-              // N: new Date().getTime().toString(),
-              N: "1",
+              N: new Date().getTime().toString(),
             },
             CUSTOMER_NAME: {
               S: "Jim Halpert",

@@ -36,38 +36,38 @@ const init = async () => {
     .promise();
   console.log("SCANNING", result4.Count ? result4.Items : null);
 
-  const result5 = await ddb
-    .query({
-      TableName: "CUSTOMER_LIST",
-      KeyConditionExpression: "CUSTOMER_ID = :id",
-      ExpressionAttributeValues: {
-        ":id": {
-          N: "1",
-        },
-      },
-    })
-    .promise();
+  // const result5 = await ddb
+  //   .query({
+  //     TableName: "CUSTOMER_LIST",
+  //     KeyConditionExpression: "CUSTOMER_ID = :id",
+  //     ExpressionAttributeValues: {
+  //       ":id": {
+  //         N: "1",
+  //       },
+  //     },
+  //   })
+  //   .promise();
 
-  console.log("RESULT 5: ", result5);
+  // console.log("RESULT 5: ", result5);
 
-  const result6 = await ddb
-    .query({
-      TableName: "CUSTOMER_LIST",
-      KeyConditionExpression: "CUSTOMER_ID = :customer_id",
-      FilterExpression: "CUSTOMER_RANDOM_NUMBER > :n",
+  // const result6 = await ddb
+  //   .query({
+  //     TableName: "CUSTOMER_LIST",
+  //     KeyConditionExpression: "CUSTOMER_ID = :customer_id",
+  //     FilterExpression: "CUSTOMER_RANDOM_NUMBER > :n",
 
-      ExpressionAttributeValues: {
-        ":customer_id": {
-          N: "1",
-        },
-        ":n": {
-          N: "3",
-        },
-      },
-    })
-    .promise();
+  //     ExpressionAttributeValues: {
+  //       ":customer_id": {
+  //         N: "1",
+  //       },
+  //       ":n": {
+  //         N: "3",
+  //       },
+  //     },
+  //   })
+  //   .promise();
 
-  console.log("RESULT 6: ", result6);
+  // console.log("RESULT 6: ", result6);
 };
 
 init();

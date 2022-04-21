@@ -2,7 +2,7 @@ export const customerTableParams: AWS.DynamoDB.CreateTableInput = {
   AttributeDefinitions: [
     {
       AttributeName: "CUSTOMER_ID",
-      AttributeType: "N",
+      AttributeType: "S",
     },
     {
       AttributeName: "CREATED_AT",
