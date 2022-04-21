@@ -14,10 +14,14 @@ var ddb = new AWS.DynamoDB(configParams);
 
 // Small example create a table and put an item
 const init = async () => {
-  const result1 = await ddb
-    .deleteTable({ TableName: "CUSTOMER_LIST" })
-    .promise();
-  console.log("DELETE TABLE", result1);
+  try {
+    const result1 = await ddb
+      .deleteTable({ TableName: "CUSTOMER_LIST" })
+      .promise();
+    console.log("DELETE TABLE", result1);
+  } catch (e) {
+    console.error("Failed to delete table, perhaps it does not exist yet.");
+  }
   const result2 = await ddb.createTable(customerTableParams).promise();
   console.log("CREATE TABLE", result2);
 
@@ -30,7 +34,7 @@ const init = async () => {
       Limit: 100,
     })
     .promise();
-  console.log("SCAN", result4.Count ? result4.Items : null);
+  console.log("SCANNING", result4.Count ? result4.Items : null);
 
   const result5 = await ddb
     .query({
