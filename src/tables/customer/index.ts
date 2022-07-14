@@ -1,3 +1,5 @@
+import AWS from 'aws-sdk';
+
 export const customerTableParams: AWS.DynamoDB.CreateTableInput = {
   AttributeDefinitions: [
     {
@@ -25,6 +27,7 @@ export const customerTableParams: AWS.DynamoDB.CreateTableInput = {
   },
   TableName: "CUSTOMER_LIST",
   StreamSpecification: {
-    StreamEnabled: false,
+    StreamEnabled: true,
+    StreamViewType: "NEW_AND_OLD_IMAGES"
   },
 };

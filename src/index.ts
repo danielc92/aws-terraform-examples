@@ -1,8 +1,8 @@
 // Load the AWS SDK for Node.js
 import AWS from "aws-sdk";
-import { configParams } from "./config";
-import { customerBatchItemsParams, customerItemParams } from "./items";
-import { customerTableParams } from "./tables";
+import { configParams } from "./config/aws";
+import { customerBatchItemsParams } from "./items";
+import { customerTableParams } from "./tables/customer";
 
 // Set the region
 AWS.config.update({
