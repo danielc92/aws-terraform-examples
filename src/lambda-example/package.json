@@ -1,0 +1,16 @@
+{
+  "name": "simple-lambda",
+  "version": "1.0.0",
+  "description": "Lambda simple",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "7z a dist\\lambda2.zip ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "figlet": "^1.5.2"
+  }
+}
