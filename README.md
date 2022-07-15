@@ -1,4 +1,4 @@
-# A SANDBOX TO EXPERIMENT WITH DYNAMODB
+# Daniel's Localstack Sandbox
 
 ### Prerequisites
 
