@@ -39,7 +39,8 @@ resource "aws_s3_bucket" "b1" {
 
 resource "aws_lambda_function" "simple_example" {
   function_name = "${var.lambda_function_name}"
-  filename      = filebase64sha256("src/lambda-example/dist/lambda2.zip")
+  filename = "src/lambda-example/dist/lambda.zip"
+  source_code_hash       = filebase64sha256("src/lambda-example/dist/lambda.zip")
   handler       = "handler.hello"
   runtime       = "nodejs14.x"
   role          = aws_iam_role.iam_for_lambda.arn
@@ -54,7 +55,8 @@ resource "aws_lambda_function" "simple_example" {
 
 resource "aws_lambda_function" "stream_lambda_example" {
   function_name = "${var.lambda_function_name_2}"
-  filename      = filebase64sha256("src/stream-lambda/dist/lambda.zip")
+  filename = "src/stream-lambda/dist/lambda.zip"
+  source_code_hash       = filebase64sha256("src/stream-lambda/dist/lambda.zip")
   handler       = "handler.streamer"
   runtime       = "nodejs14.x"
   role          = aws_iam_role.iam_for_lambda.arn

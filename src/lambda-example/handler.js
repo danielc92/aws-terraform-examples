@@ -3,7 +3,7 @@ var figlet = require("figlet");
 
 module.exports.hello = async (event) => {
   console.log("[LOG] Hello from daniels-first-lambda")
-  console.warn("[WARN] Test warning from daniels-first-lambda");
+  console.warn("[WARN] Test warning from daniels-first-lambda!");
   figlet("THIS IS A SIMPLE LAMBDA!", (err, result) => {
     if (!err) {
       console.log(result);
