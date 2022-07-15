@@ -7,10 +7,18 @@
 - installation of nvm (lower node versions may be compatible)
   - `v16.0.0 (Currently using 64-bit executable)`
 
-### How to run
+### First time setup
 
-- switch to the correct node version `nvm use 16.0.0`
-- start localstack `localstack start -d`
-- `npm i`
-- `npm run ts-watch`
-- `npm run start`
+- Switch to the correct node version `nvm use`
+- Start localstack via docker `docker-compose up`
+- Install dependencies `npm i`
+- Create resources via terraform `terraform plan && terraform apply`
+
+### How to build
+
+- `yarn tsc`
+
+### How to run insert or update record script
+
+- `node dist\\insert-records.js`
+- `node dist\\update-record.js`
