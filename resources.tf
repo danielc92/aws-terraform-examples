@@ -14,6 +14,7 @@ provider "aws" {
     s3       = "${var.aws_host}:4566"
     sts = "${var.aws_host}:4566"
     iam = "${var.aws_host}:4566"
+    sqs = "${var.aws_host}:4566"
   }
 }
 
@@ -162,5 +163,21 @@ resource "aws_dynamodb_table" "cats" {
     hash_key        = "CAT_ID"
     range_key       = "CAT_CREATED_AT"
     projection_type = "ALL"
+  }
+}
+
+// Example of an SNS queue
+
+// Example of an SQS queue
+resource "aws_sqs_queue" "terraform_queue" {
+  name = "example-queue"
+  delay_seconds = 30
+  max_message_size = 2048
+  message_retention_seconds = 60 * 60 * 2
+  receive_wait_time_seconds = 10
+  # fifo_queue = true
+
+  tags = {
+    "application" = "alert-service"
   }
 }
