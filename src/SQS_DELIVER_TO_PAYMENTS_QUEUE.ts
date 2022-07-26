@@ -13,12 +13,13 @@ const init = () => {
 
     const message = {
         name: "Jane Doe",
-        subject: "Happy birthday to you!",
+        subject: "Successful payment!",
+        amount: 34.55,
         timestamp: "2022-05-01 13:32:12 GMT+11"
     }
     sqsClient.sendMessage({
         MessageBody: JSON.stringify(message),
-        QueueUrl: "http://localhost:4566/000000000000/example-queue",
+        QueueUrl: "http://localhost:4566/000000000000/payments",
         DelaySeconds: 5,
     }, function(error, data) {
         if (error) {

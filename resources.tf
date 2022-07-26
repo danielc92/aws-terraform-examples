@@ -169,13 +169,26 @@ resource "aws_dynamodb_table" "cats" {
 // Example of an SNS queue
 
 // Example of an SQS queue
-resource "aws_sqs_queue" "terraform_queue" {
-  name = "example-queue"
+resource "aws_sqs_queue" "payment_queue" {
+  name = "payments"
   delay_seconds = 30
   max_message_size = 2048
   message_retention_seconds = 60 * 60 * 2
   receive_wait_time_seconds = 10
-  # fifo_queue = true
+
+  tags = {
+    "application" = "alert-service"
+  }
+}
+
+resource "aws_sqs_queue" "customer_queue" {
+  name = "customers.fifo"
+  delay_seconds = 30
+  max_message_size = 2048
+  message_retention_seconds = 60 * 60 * 2
+  receive_wait_time_seconds = 10
+  # this queue is first-in-first-out, order matters
+  fifo_queue = true
 
   tags = {
     "application" = "alert-service"

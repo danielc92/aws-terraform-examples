@@ -11,13 +11,14 @@ const sqsClient = new AWS.SQS({
 
 const init = () => {
     sqsClient.receiveMessage({
-        QueueUrl: "http://localhost:4566/000000000000/example-queue",
+        QueueUrl: "http://localhost:4566/000000000000/customers.fifo",
         MaxNumberOfMessages: 1,
-        WaitTimeSeconds: 5
+        WaitTimeSeconds: 5,
     }).promise().then((result) => {
         if (result.Messages) {
             console.log(result)
         } else {
+            console.log(result)
             console.log("Looks like the queue is empty!")
         }
     }).catch((error) => console.error(error))   
