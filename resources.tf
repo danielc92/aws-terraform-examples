@@ -183,12 +183,10 @@ resource "aws_sqs_queue" "payment_queue" {
 
 resource "aws_sqs_queue" "customer_queue" {
   name = "customers.fifo"
-  delay_seconds = 30
   max_message_size = 2048
-  message_retention_seconds = 60 * 60 * 2
-  receive_wait_time_seconds = 10
   # this queue is first-in-first-out, order matters
   fifo_queue = true
+  content_based_deduplication = true
 
   tags = {
     "application" = "alert-service"

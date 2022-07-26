@@ -9,6 +9,7 @@ const sqsClient = new AWS.SQS({
     }
 });
 
+
 const init = () => {
     sqsClient.receiveMessage({
         QueueUrl: "http://localhost:4566/000000000000/payments",

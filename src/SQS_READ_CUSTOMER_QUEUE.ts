@@ -6,17 +6,23 @@ const sqsClient = new AWS.SQS({
     credentials: {
         accessKeyId: "12345",
         secretAccessKey: "12345"
-    }
+    }, 
 });
 
 const init = () => {
     sqsClient.receiveMessage({
+        VisibilityTimeout: 2,
         QueueUrl: "http://localhost:4566/000000000000/customers.fifo",
-        MaxNumberOfMessages: 1,
-        WaitTimeSeconds: 5,
+        AttributeNames: [
+            'All',
+          ],
+          MaxNumberOfMessages: 10,
+          MessageAttributeNames: [
+            'All',
+          ],
     }).promise().then((result) => {
         if (result.Messages) {
-            console.log(result)
+            console.log(JSON.stringify(result, null, 2))
         } else {
             console.log(result)
             console.log("Looks like the queue is empty!")

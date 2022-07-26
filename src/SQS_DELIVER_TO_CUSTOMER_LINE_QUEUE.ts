@@ -11,17 +11,21 @@ const sqsClient = new AWS.SQS({
 
 const init = () => {
 
-    const message = {
-        name: "Jim Smith",
-        subject: "NEW_CUSTOMER_LINED_UP",
-        customerType: "GOLD_MEMBERSHIP",
-        timestamp: "2022-05-01 13:32:12 GMT+11"
-    }
   
     sqsClient.sendMessage({
-        MessageBody: JSON.stringify(message),
+        MessageBody: JSON.stringify("New customer has lined up."),
+        MessageAttributes: {
+            "Name": {
+              DataType: "String",
+              StringValue: "Jim Doe"
+            },"Membership": {
+                DataType: "String",
+                StringValue: "GOLD MEMBERSHIP"
+            }
+        },
+        MessageGroupId: "CUSTOMER_LINE_1",
         QueueUrl: "http://localhost:4566/000000000000/customers.fifo",
-        DelaySeconds: 2,
+        // DelaySeconds: 2, FIFO should not have delay param
     }, function(error, data) {
         if (error) {
             console.log(error)
