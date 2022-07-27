@@ -31,11 +31,6 @@ variable "lambda_function_name_2" {
   default = "a-stream-lambda"
 }
 
-// S3
-resource "aws_s3_bucket" "b1" {
-  bucket = "dans-bucket"
-}
-
 // LAMBDAS
 
 resource "aws_lambda_function" "simple_example" {
@@ -190,5 +185,15 @@ resource "aws_sqs_queue" "customer_queue" {
 
   tags = {
     "application" = "alert-service"
+  }
+}
+
+
+// S3 Resources
+resource "aws_s3_bucket" "fruit_bucket" {
+  bucket = "fruit-bucket"
+
+  tags = {
+    category = "fruit images"
   }
 }
