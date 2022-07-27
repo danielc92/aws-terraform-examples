@@ -12,7 +12,10 @@ const s3Client = new AWS.S3({
 
 const init = () => {
   s3Client.listObjectsV2({
-    Bucket: 'fruit-bucket'
+    // bucket defined in resources.tf
+    Bucket: 'fruit-bucket',
+    // changing the prefix to something that isnt /assets should return an empty array
+    Prefix: '/assets'
   })
     .promise()
     .then(result => console.log('Success', result))

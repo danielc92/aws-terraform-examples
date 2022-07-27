@@ -14,10 +14,12 @@ const s3Client = new AWS.S3({
 
 const init = () => {
   s3Client.upload({
+    // bucket defined in resources.tf
     Bucket: 'fruit-bucket',
+    // File uploads need to be converted into streams, and appended with the appropriate ContentType
     Body: fs.createReadStream(path.resolve(__dirname, './assets/images/estudio-bloom-oo3kSFZ7uHk-unsplash.jpg')),
-    Key: '/assets/images/apple2.jpg',
     ContentType: 'image/jpeg',
+    Key: '/assets/images/apple2.jpg',
     ContentEncoding: 'base64',
     Metadata: {
       colour: 'Green',
