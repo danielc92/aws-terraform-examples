@@ -32,7 +32,6 @@ variable "lambda_function_name_2" {
 }
 
 // LAMBDAS
-
 resource "aws_lambda_function" "simple_example" {
   function_name = "${var.lambda_function_name}"
   filename = "src/lambda-example/dist/lambda.zip"
@@ -103,7 +102,6 @@ resource "aws_iam_policy" "lamb_logging_policy" {
 
 }
 
-
 resource "aws_iam_role_policy_attachment" "attachment_for_lambda" {
   role       = aws_iam_role.iam_for_lambda.id
   policy_arn = aws_iam_policy.lamb_logging_policy.arn
@@ -111,7 +109,7 @@ resource "aws_iam_role_policy_attachment" "attachment_for_lambda" {
 }
 
 
-// Customer dynamodb table
+// Customer dynamodb table, with stream enabled
 resource "aws_dynamodb_table" "customers" {
   name           = "CUSTOMER_LIST"
   read_capacity  = "20"
@@ -160,8 +158,6 @@ resource "aws_dynamodb_table" "cats" {
     projection_type = "ALL"
   }
 }
-
-// Example of an SNS queue
 
 // Example of an SQS queue
 resource "aws_sqs_queue" "payment_queue" {
