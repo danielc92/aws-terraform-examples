@@ -25,17 +25,17 @@ variable "aws_host" {
 }
 
 variable "lambda_function_name" {
-  default = "daniels-first-lambda"
+  default = "basic-lambda"
 }
 variable "lambda_function_name_2" {
-  default = "a-stream-lambda"
+  default = "dynamo-stream-lambda"
 }
 
 // LAMBDAS
-resource "aws_lambda_function" "simple_example" {
+resource "aws_lambda_function" "basic_lambda_example" {
   function_name = "${var.lambda_function_name}"
-  filename = "src/lambda-example/dist/lambda.zip"
-  source_code_hash       = filebase64sha256("src/lambda-example/dist/lambda.zip")
+  filename = "src/lambdas/basic-lambda/dist/lambda.zip"
+  source_code_hash       = filebase64sha256("src/lambdas/basic-lambda/dist/lambda.zip")
   handler       = "handler.hello"
   runtime       = "nodejs14.x"
   role          = aws_iam_role.iam_for_lambda.arn
@@ -50,8 +50,8 @@ resource "aws_lambda_function" "simple_example" {
 
 resource "aws_lambda_function" "stream_lambda_example" {
   function_name = "${var.lambda_function_name_2}"
-  filename = "src/stream-lambda/dist/lambda.zip"
-  source_code_hash       = filebase64sha256("src/stream-lambda/dist/lambda.zip")
+  filename = "src/dynamo-stream-lambda/dist/lambda.zip"
+  source_code_hash       = filebase64sha256("src/lambdas/dynamo-stream-lambda/dist/lambda.zip")
   handler       = "handler.streamer"
   runtime       = "nodejs14.x"
   role          = aws_iam_role.iam_for_lambda.arn
