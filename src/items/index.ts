@@ -1,6 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
+import AWS from 'aws-sdk'
 
-// inserts 3 items
 export const customerBatchItemsParams: AWS.DynamoDB.BatchWriteItemInput = {
   RequestItems: {
     CUSTOMER_LIST: [
@@ -8,56 +7,56 @@ export const customerBatchItemsParams: AWS.DynamoDB.BatchWriteItemInput = {
         PutRequest: {
           Item: {
             CUSTOMER_ID: {
-              S: "robert001",
+              S: 'robert001'
             },
             CREATED_AT: {
-              N: "16000000002",
+              N: '16000000002'
             },
             CUSTOMER_NAME: {
-              S: "Robert California",
+              S: 'Robert California'
             },
             CUSTOMER_RANDOM_NUMBER: {
-              N: "2",
-            },
-          },
-        },
+              N: '2'
+            }
+          }
+        }
       },
       {
         PutRequest: {
           Item: {
             CUSTOMER_ID: {
-              S: "dwight001",
+              S: 'dwight001'
             },
             CREATED_AT: {
-              N: "16000000001",
+              N: '16000000001'
             },
             CUSTOMER_NAME: {
-              S: "Dwight Schrute",
+              S: 'Dwight Schrute'
             },
             CUSTOMER_RANDOM_NUMBER: {
-              N: "3",
-            },
-          },
-        },
+              N: '3'
+            }
+          }
+        }
       },
       {
         PutRequest: {
           Item: {
             CUSTOMER_ID: {
-              S: "jim001",
+              S: 'jim001'
             },
             CREATED_AT: {
-              N: "16000000000",
+              N: '16000000000'
             },
             CUSTOMER_NAME: {
-              S: "Jim Halpert",
+              S: 'Jim Halpert'
             },
             CUSTOMER_RANDOM_NUMBER: {
-              N: "4",
-            },
-          },
-        },
-      },
-    ],
-  },
-};
+              N: '4'
+            }
+          }
+        }
+      }
+    ]
+  }
+}

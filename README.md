@@ -11,7 +11,7 @@
 
 - Switch to the correct node version `nvm use`
 - Start localstack via docker `docker-compose up`
-- Install dependencies `npm i`
+- Install dependencies `yarn`
 - Create resources via terraform `terraform plan && terraform apply`
 
 ### How to build
