@@ -10,11 +10,12 @@ provider "aws" {
   s3_use_path_style = true
   endpoints {
     dynamodb = "${var.aws_host}:4566"
+    iam      = "${var.aws_host}:4566"
     lambda   = "${var.aws_host}:4566"
+    sts      = "${var.aws_host}:4566"
+    sqs      = "${var.aws_host}:4566"
+    sns      = "${var.aws_host}:4566"
     s3       = "${var.aws_host}:4566"
-    sts = "${var.aws_host}:4566"
-    iam = "${var.aws_host}:4566"
-    sqs = "${var.aws_host}:4566"
   }
 }
 
@@ -33,12 +34,12 @@ variable "lambda_function_name_2" {
 
 // LAMBDAS
 resource "aws_lambda_function" "basic_lambda_example" {
-  function_name = "${var.lambda_function_name}"
-  filename = "src/lambdas/basic-lambda/dist/lambda.zip"
-  source_code_hash       = filebase64sha256("src/lambdas/basic-lambda/dist/lambda.zip")
-  handler       = "handler.hello"
-  runtime       = "nodejs14.x"
-  role          = aws_iam_role.iam_for_lambda.arn
+  function_name    = var.lambda_function_name
+  filename         = "src/lambdas/basic-lambda/dist/lambda.zip"
+  source_code_hash = filebase64sha256("src/lambdas/basic-lambda/dist/lambda.zip")
+  handler          = "handler.hello"
+  runtime          = "nodejs14.x"
+  role             = aws_iam_role.iam_for_lambda.arn
 
   environment {
     variables = {
@@ -49,12 +50,12 @@ resource "aws_lambda_function" "basic_lambda_example" {
 }
 
 resource "aws_lambda_function" "stream_lambda_example" {
-  function_name = "${var.lambda_function_name_2}"
-  filename = "src/dynamo-stream-lambda/dist/lambda.zip"
-  source_code_hash       = filebase64sha256("src/lambdas/dynamo-stream-lambda/dist/lambda.zip")
-  handler       = "handler.streamer"
-  runtime       = "nodejs14.x"
-  role          = aws_iam_role.iam_for_lambda.arn
+  function_name    = var.lambda_function_name_2
+  filename         = "src/lambdas/dynamo-stream-lambda/dist/lambda.zip"
+  source_code_hash = filebase64sha256("src/lambdas/dynamo-stream-lambda/dist/lambda.zip")
+  handler          = "handler.streamer"
+  runtime          = "nodejs14.x"
+  role             = aws_iam_role.iam_for_lambda.arn
 
   environment {
     variables = {
@@ -83,8 +84,8 @@ resource "aws_iam_role" "iam_for_lambda" {
 }
 
 resource "aws_iam_policy" "lamb_logging_policy" {
-  name = "lamb_logging_policy"
-  path = "/"
+  name        = "lamb_logging_policy"
+  path        = "/"
   description = "IAM POLICY FOR LOGGIN LAMBDA"
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -111,13 +112,13 @@ resource "aws_iam_role_policy_attachment" "attachment_for_lambda" {
 
 // Customer dynamodb table, with stream enabled
 resource "aws_dynamodb_table" "customers" {
-  name           = "CUSTOMER_LIST"
-  read_capacity  = "20"
-  write_capacity = "20"
-  hash_key       = "CUSTOMER_ID"
-  range_key = "CREATED_AT"
+  name             = "CUSTOMER_LIST"
+  read_capacity    = "20"
+  write_capacity   = "20"
+  hash_key         = "CUSTOMER_ID"
+  range_key        = "CREATED_AT"
   stream_view_type = "NEW_AND_OLD_IMAGES"
-  stream_enabled = true
+  stream_enabled   = true
 
   attribute {
     name = "CUSTOMER_ID"
@@ -161,9 +162,9 @@ resource "aws_dynamodb_table" "cats" {
 
 // Example of an SQS queue
 resource "aws_sqs_queue" "payment_queue" {
-  name = "payments"
-  delay_seconds = 30
-  max_message_size = 2048
+  name                      = "payments"
+  delay_seconds             = 30
+  max_message_size          = 2048
   message_retention_seconds = 60 * 60 * 2
   receive_wait_time_seconds = 10
 
@@ -173,10 +174,10 @@ resource "aws_sqs_queue" "payment_queue" {
 }
 
 resource "aws_sqs_queue" "customer_queue" {
-  name = "customers.fifo"
+  name             = "customers.fifo"
   max_message_size = 2048
   # this queue is first-in-first-out, order matters
-  fifo_queue = true
+  fifo_queue                  = true
   content_based_deduplication = true
 
   tags = {
@@ -192,4 +193,34 @@ resource "aws_s3_bucket" "fruit_bucket" {
   tags = {
     category = "fruit images"
   }
+}
+
+resource "aws_sns_topic" "order_fraud_updates" {
+  name = "order-fraud-topic"
+}
+
+resource "aws_sns_topic" "order_confirmation_updates" {
+  name = "order-confirmation-topic"
+}
+
+
+resource "aws_sqs_queue" "order_fraud_queue" {
+  name = "order-fraud-queue"
+}
+
+
+resource "aws_sqs_queue" "order_confirmation_queue" {
+  name = "order-confirmation-queue"
+}
+
+resource "aws_sns_topic_subscription" "order_confirmation_pairing" {
+  topic_arn = aws_sns_topic.order_confirmation_updates.arn
+  protocol  = "sqs"
+  endpoint  = aws_sqs_queue.order_confirmation_queue.arn
+}
+
+resource "aws_sns_topic_subscription" "order_fraud_pairing" {
+  topic_arn = aws_sns_topic.order_fraud_updates.arn
+  protocol  = "sqs"
+  endpoint  = aws_sqs_queue.order_fraud_queue.arn
 }
