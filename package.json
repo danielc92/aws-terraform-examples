@@ -8,7 +8,8 @@
     "ts-watch": "node_modules\\.bin\\tsc --watch",
     "ts-watch_": "node_modules/.bin/tsc --watch",
     "start": "node dist\\index.js",
-    "start_": "node dist/index.js"
+    "start_": "node dist/index.js",
+    "infra": "terraform plan && terraform apply --auto-approve"
   },
   "author": "",
   "license": "ISC",
