@@ -17,6 +17,24 @@ const init = () => {
     // bucket defined in resources.tf
     Bucket: 'fruit-bucket',
     // File uploads need to be converted into streams, and appended with the appropriate ContentType
+    Body: fs.createReadStream(path.resolve(__dirname, './assets/images/robson-melo-H6VxhE_x-kE-unsplash.jpg')),
+    ContentType: 'image/jpeg',
+    Key: '/assets/images/apple1.jpg',
+    ContentEncoding: 'base64',
+    Metadata: {
+      colour: 'Purple',
+      type: 'Fuji',
+      pickedOn: 'Tuesday 22nd July'
+    }
+  })
+    .promise()
+    .then(result => console.log('Successfully uploaded', result))
+    .catch(error => console.error(error))
+
+  s3Client.upload({
+    // bucket defined in resources.tf
+    Bucket: 'fruit-bucket',
+    // File uploads need to be converted into streams, and appended with the appropriate ContentType
     Body: fs.createReadStream(path.resolve(__dirname, './assets/images/estudio-bloom-oo3kSFZ7uHk-unsplash.jpg')),
     ContentType: 'image/jpeg',
     Key: '/assets/images/apple2.jpg',
