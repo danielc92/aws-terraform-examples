@@ -9,6 +9,7 @@
     "ts-watch_": "node_modules/.bin/tsc --watch",
     "start": "node dist\\index.js",
     "start_": "node dist/index.js",
+    "fleet": "docker-compose up",
     "infra": "terraform plan && terraform apply --auto-approve"
   },
   "author": "",
